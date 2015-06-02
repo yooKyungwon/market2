@@ -126,6 +126,7 @@ module.exports = function(app) {
 					if(bc == result[i].barcode){
 						product = {
 								check: 'true',
+								barcode: result[i].barcode,
 						  	name: result[i].name,
 								price: result[i].price,
 								count: count
