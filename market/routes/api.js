@@ -59,7 +59,7 @@ module.exports = function(app) {
 	app.post('/cart', function(req, res) {
 			//console.log(req.cartNum);
 			var cn = req.body.cartNum;
-			console.log(cartNum);
+			console.log(cn);
 		client.query('select * from cart', function(error, result){
 			if(error) {
 				console.log('error');
