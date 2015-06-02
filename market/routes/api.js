@@ -1,9 +1,11 @@
 var mysql = require('mysql');
 
 var mysqlConfig = {
-	user: 'root',
-	password: 'gmlwns153',
-	database: 'market'
+	host: 'us-cdbr-iron-east-02.cleardb.net',
+	port:3306,
+	user: 'bec2bf55a5cbdf',
+	password: 'aabb9961',
+	database: 'heroku_823658acf68aaa0'
 	};
 var client = mysql.createConnection(mysqlConfig);
 
@@ -55,7 +57,10 @@ module.exports = function(app) {
 		});
 	});
 //cart
-	app.get('/cart', function(req, res) {
+	app.post('/cart', function(req, res) {
+			console.log(req.cartNum);
+			var cartNum = req.cartNum;
+			console.log(cartNum);
 		client.query('select * from cart', function(error, result){
 			if(error) {
 				console.log('error');
@@ -100,8 +105,11 @@ module.exports = function(app) {
 		});
 	});
 //barcode
-	app.get('/barcode', function(req, res) {
-		client.query('select * from barcode', function(error, result){
+	app.post('/barcode', function(req, res) {
+
+		console.log(req.barcode);
+		var barcode = req.barcode;
+		client.query('select * from barcode where barcode=?',[barcode] ,function(error, result){
 			if(error) {
 				console.log('error');
 			}
@@ -118,7 +126,7 @@ module.exports = function(app) {
 								cart: getQuery.cart,
 								name: result[i].name,
 								price: result[i].price,
-								count: count 
+								count: count
 						};
 						check = 1;
 						console.log('product')
@@ -139,7 +147,7 @@ module.exports = function(app) {
 				}
 				/*res.render('list.jade', {
 					title: 'CapStone Design Page(Database)',
-					data: result 
+					data: result
 				});*/
 			}
 		});
@@ -155,7 +163,7 @@ module.exports = function(app) {
 				var total = [];
 				var calc = 0;
 				var getQuery = req.query;
-				
+
 				for(i=0;i<result.length;i++){
 					if(result[i].cart == cart){
 						total.push({
@@ -163,7 +171,7 @@ module.exports = function(app) {
 							price:result[i].price
 						});
 					}
-				}		
+				}
 				for(i=0;i<total.length;i++){
 					calc = calc+total[i].price
 				}
@@ -171,19 +179,20 @@ module.exports = function(app) {
 					title: 'Counter for Market',
 					cart: cart,
 					total: calc,
-					data: total 
+					data: total
 				});
 			}
 		});
 	});
 //payment
-app.get('/pay/:cart', function(req, res) {
+app.post('/pay', function(req, res) {
+	var cart = req.cartNum;
 		client.query('select * from bag', function(err, result){
 			if(err){
 				console.log('err');
 			}
 			else{
-				var cart = req.param('cart')
+				//var cart = req.param('cart')
 				for(i=0;i<result.length;i++){
 					if(result[i].cart == cart){
 						client.query('delete from bag where cart = ?', [cart]);        //장바구니 비우기
