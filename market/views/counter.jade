@@ -1,0 +1,18 @@
+head
+
+h1= title
+hr
+h2 list of #{cart}
+table(width="100%" border="1")
+	tr
+		th name
+		th price
+	- data.forEach(function(market, list){
+	tr
+		td #{market.name}
+		td #{market.price}
+	- });
+hr
+h3 total : #{total} won
+h4 
+	a(href="/pay/#{cart}") PAYMENT

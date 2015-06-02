@@ -1,0 +1,19 @@
+head
+
+h1= title
+- data.forEach(function(smart, list){
+hr
+table(width="100%" border="1")
+	tr
+		th index
+		th name
+		th price
+		th barcode
+	tr
+		td #{smart.index}
+		td #{smart.name}
+		td #{smart.price}
+		td #{smart.barcode}
+hr
+- });
+h2 Counter
