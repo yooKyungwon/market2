@@ -1,5 +1,5 @@
 var mysql = require('mysql');
-
+var bodyParser = require('body-parser');
 var mysqlConfig = {
 	host: 'us-cdbr-iron-east-02.cleardb.net',
 	user: 'bec2bf55a5cbdf',
@@ -58,15 +58,16 @@ module.exports = function(app) {
 //cart
 	app.post('/cart', function(req, res) {
 			//console.log(req.cartNum);
-			var cartNum = req.body.cartNum;
+			var cn = req.body.cartNum;
 			console.log(cartNum);
-		client.query('select * from cart where number = ?',[cartNum], function(error, result){
+		client.query('select * from cart', function(error, result){
 			if(error) {
 				console.log('error');
 			}
 			else {
-				var getQuery = req.query;
-				var cn = getQuery.cn;
+
+				// var getQuery = req.query;
+				// var cn = getQuery.cn;
 				var check = 0;
 				var cartstate = 0;
 				var text = 'not';
@@ -106,15 +107,18 @@ module.exports = function(app) {
 //barcode
 	app.post('/barcode', function(req, res) {
 
-		//console.log(req.barcode);
-		var barcode = req.body.barcode;
-		client.query('select * from barcode where barcode=?',[barcode] ,function(error, result){
+		//console.log(req);
+		var bc = req.body.barcode;
+		var cartNum = req.body.cartNum;
+		console.log('req.body',bc);
+		client.query('select * from barcode' ,function(error, result){
 			if(error) {
 				console.log('error');
 			}
 			else {
-				var getQuery = req.query;
-				var bc = getQuery.bc;
+				console.log('req.query',req.query);
+				// var getQuery = req.query;
+				// var bc = getQuery.bc;
 				var check = 0;
 				var product ;
 				var count = 1;
@@ -122,15 +126,14 @@ module.exports = function(app) {
 					if(bc == result[i].barcode){
 						product = {
 								check: 'true',
-								cart: getQuery.cart,
-								name: result[i].name,
+						  	name: result[i].name,
 								price: result[i].price,
 								count: count
 						};
 						check = 1;
 						console.log('product')
 						// 고객의 카트에 담긴 물건을 장바구니에 저장
-						client.query('insert into bag(cart, name, price) values (?, ?, ?)', [getQuery.cart, result[i].name, result[i].price]);
+						client.query('insert into bag(cart, name, price) values (?, ?, ?)', [cartNum, result[i].name, result[i].price]);
 						res.json(product);
 						break ;
 					}
