@@ -2,7 +2,6 @@ var mysql = require('mysql');
 
 var mysqlConfig = {
 	host: 'us-cdbr-iron-east-02.cleardb.net',
-	port:3306,
 	user: 'bec2bf55a5cbdf',
 	password: 'aabb9961',
 	database: 'heroku_823658acf68aaa0'
@@ -61,7 +60,7 @@ module.exports = function(app) {
 			console.log(req.cartNum);
 			var cartNum = req.cartNum;
 			console.log(cartNum);
-		client.query('select * from cart', function(error, result){
+		client.query('select * from cart where number = ?',[cartNum], function(error, result){
 			if(error) {
 				console.log('error');
 			}
