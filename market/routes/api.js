@@ -57,8 +57,8 @@ module.exports = function(app) {
 	});
 //cart
 	app.post('/cart', function(req, res) {
-			console.log(req.cartNum);
-			var cartNum = req.cartNum;
+			//console.log(req.cartNum);
+			var cartNum = req.body.cartNum;
 			console.log(cartNum);
 		client.query('select * from cart where number = ?',[cartNum], function(error, result){
 			if(error) {
@@ -106,8 +106,8 @@ module.exports = function(app) {
 //barcode
 	app.post('/barcode', function(req, res) {
 
-		console.log(req.barcode);
-		var barcode = req.barcode;
+		//console.log(req.barcode);
+		var barcode = req.body.barcode;
 		client.query('select * from barcode where barcode=?',[barcode] ,function(error, result){
 			if(error) {
 				console.log('error');
