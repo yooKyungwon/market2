@@ -162,7 +162,8 @@ module.exports = function(app) {
 				console.log('err');
 			}
 			else{
-				var cart = req.param('cart')
+				var cart = req.param('cart');
+				console.log('req param',cart);
 				var total = [];
 				var calc = 0;
 				var getQuery = req.query;
@@ -188,8 +189,8 @@ module.exports = function(app) {
 		});
 	});
 //payment
-app.post('/pay', function(req, res) {
-	var cart = req.cartNum;
+app.get('/pay/:cart', function(req, res) {
+
 		client.query('select * from bag', function(err, result){
 			if(err){
 				console.log('err');
@@ -207,4 +208,27 @@ app.post('/pay', function(req, res) {
 			}
 		});
 	});
+app.post('/pay', function(req, res) {
+	var cart  = req.body.cartNum;
+		client.query('select * from bag where cart = ? ',[cart], function(err, result){
+			if(err){
+				console.log('err');
+			}
+			else{
+				if(result.length()>0){
+						res.json({
+							check: 'false'
+						});
+				}else if(result.length()==0){
+							res.json({
+								check: 'true'
+							});
+				}
+			}
+		});
+	});
+
+
+
+
 }
