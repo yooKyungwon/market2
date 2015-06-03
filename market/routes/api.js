@@ -189,8 +189,10 @@ module.exports = function(app) {
 		});
 	});
 //payment
-app.get('/pay/:cart', function(req, res) {
-
+app.get('/payment/:cart', function(req, res) {
+	//var cart = req.param('cart');
+	var cart  = req.query.cart;
+	console.log('cartNum',cart);
 		client.query('select * from bag', function(err, result){
 			if(err){
 				console.log('err');
@@ -227,7 +229,11 @@ app.post('/pay', function(req, res) {
 			}
 		});
 	});
-
+app.get('/counterapp', function(req, res) {
+	res.render('counterapp', {
+		title: 'Server for Market'
+	});
+	});
 
 
 
