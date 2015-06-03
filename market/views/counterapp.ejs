@@ -1,0 +1,18 @@
+<html>
+<head>
+
+<h1>카트 번호를 입력 해주세요.</h1>
+<script type="text/javascript">
+
+       function getText(){
+       var cart = document.getElementById('cartNum').value;
+       	location.href='/counter/'+cart
+       	}
+   </script>
+</head>
+<body>
+
+<input type="text" name="cart" value="" id="cartNum">
+<input type ="button" value="Calculate" onclick="getText();">
+</body>
+</html>
