@@ -215,11 +215,11 @@ app.post('/pay', function(req, res) {
 				console.log('err');
 			}
 			else{
-				if(result.length()>0){
+				if(result.length>0){
 						res.json({
 							check: 'false'
 						});
-				}else if(result.length()==0){
+				}else if(result.length==0){
 							res.json({
 								check: 'true'
 							});
