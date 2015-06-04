@@ -190,9 +190,9 @@ module.exports = function(app) {
 	});
 //payment
 app.get('/payment/:cart', function(req, res) {
-	//var cart = req.param('cart');
-	var cart  = req.query.cart;
-	console.log('cartNum',cart);
+	var cart = req.param('cart');
+	// var cart  = req.query.cart;
+	// console.log('cart',cart);
 		client.query('select * from bag', function(err, result){
 			if(err){
 				console.log('err');
