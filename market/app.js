@@ -73,11 +73,11 @@ app.use(function(err, req, res, next) {
   });
 });*/
 // Exception Handler 등록
-process.on('uncaughtException', function (err) {
- console.log('Caught exception: ' + err);
- // 추후 trace를 하게 위해서 err.stack 을 사용하여 logging하시기 바랍니다.
- // Published story에서 beautifule logging winston 참조
-});
+// process.on('uncaughtException', function (err) {
+//  console.log('Caught exception: ' + err);
+//  // 추후 trace를 하게 위해서 err.stack 을 사용하여 logging하시기 바랍니다.
+//  // Published story에서 beautifule logging winston 참조
+// });
 app.listen(app.get('port'), function() {
   console.log("Node app is running at localhost:" + app.get('port'));
 });
